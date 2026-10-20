@@ -27,7 +27,11 @@
    match index.html.
 ---------------------------------------------------------------- */
 const statLabel = document.getElementById("statLabel");
+const statLabel2 = document.getElementById("statLabel2");
+const statLabel3 = document.getElementById("statLabel3");
 const statValue = document.getElementById("statValue");
+const statValue2 = document.getElementById("statValue2");
+const statValue3 = document.getElementById("statValue3");
 const message = document.getElementById("message");
 const answerBtn = document.getElementById("answerBtn");
 const resetBtn = document.getElementById("resetBtn");
@@ -53,8 +57,8 @@ const devLog = document.getElementById("devLog");
    TODO: Replace the line below with your own state variable.
 ---------------------------------------------------------------- */
 let lives = 3; // <-- rename this and set a starting value
-
-
+let streak = 0; 
+let xp_gained = 0;
 /* ----------------------------------------------------------------
    STEP 3 (OPTIONAL — Random Rewards teams need this):
    CREATE AN ARRAY OF POSSIBLE VALUES
@@ -68,9 +72,12 @@ let lives = 3; // <-- rename this and set a starting value
 
    If your feature does NOT use randomness, you can ignore this
    step or delete it.
+
+
+   variablename[]
 ---------------------------------------------------------------- */
 // const rewardOptions = [/* TODO: add your possible values */];
-
+const rewardOptions = [10, 15, 20, 50];   
 
 /* ----------------------------------------------------------------
    STEP 4: SIMULATE A "CORRECT" OR "INCORRECT" ANSWER
@@ -141,6 +148,12 @@ function handleAnswer() {
     message.textContent = "Try again!";
   }
 
+  if(correct){
+    streak++;
+  }
+  else{
+    streak = 0;
+  }
 
   // --------------------------------------------------------------
   // TODO: Add at least ONE more condition that checks a MILESTONE.
@@ -166,7 +179,7 @@ function handleAnswer() {
 
   // TODO: add your milestone if/else if/else chain here
   if (correct){
-    break;
+    message.textContent = "Correct!";
   }
   else{
     if(lives > 0){
@@ -176,7 +189,16 @@ function handleAnswer() {
       message.textContent = "Game Over! Resetting...";
     }
   }
-    
+
+  if(streak > 1){
+    xp_gained = rewardOptions[Math.floor(Math.random() * rewardOptions.length)];
+    message.textContent = `Streak! You earned ${xp_gained} XP.`;
+  }
+  else if (lives == 0){
+    message.textContent = `Game Over! You earned ${xp_gained} Total XP.`;
+    xpgained = 0;
+  }
+
   // --------------------------------------------------------------
   // STEP 6: UPDATE THE SCREEN
   // --------------------------------------------------------------
@@ -184,6 +206,8 @@ function handleAnswer() {
   // sees. You have to update the DOM separately.
   // --------------------------------------------------------------
   statValue.textContent = lives;
+  statValue2.textContent = streak;
+  statValue3.textContent = xp_gained;
 
   // This logs to YOUR dev console (in the browser, press F12 to see
   // the real one too) — it's for your team, not the player.
@@ -205,8 +229,11 @@ function handleAnswer() {
 ---------------------------------------------------------------- */
 function handleReset() {
   lives = 3; // <-- match this to your starting value from Step 2
-
+  streak = 0;
+  xp_gained = 0;
   statValue.textContent = lives;
+  statValue2.textContent = streak;
+  statValue3.textContent = xp_gained;
   message.textContent = "Press \"Answer\" to begin!";
   devLog.textContent = "Waiting for input...";
 
