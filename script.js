@@ -52,7 +52,7 @@ const devLog = document.getElementById("devLog");
 
    TODO: Replace the line below with your own state variable.
 ---------------------------------------------------------------- */
-let gameState = 0; // <-- rename this and set a starting value
+let lives = 3; // <-- rename this and set a starting value
 
 
 /* ----------------------------------------------------------------
@@ -99,8 +99,8 @@ function isAnswerCorrect() {
    Before writing code here, finish this sentence on paper or in
    chat with your team:
 
-     IF ________________________
-     THEN ________________________
+     IF You get incorrecnt answer,
+     THEN You lose a life
 
    Then translate it below. Some starter patterns are shown —
    delete the ones you don't need and build out your own.
@@ -165,20 +165,30 @@ function handleAnswer() {
   // --------------------------------------------------------------
 
   // TODO: add your milestone if/else if/else chain here
-
-
+  if (correct){
+    break;
+  }
+  else{
+    if(lives > 0){
+      lives--;
+    }
+    else{
+      message.textContent = "Game Over! Resetting...";
+    }
+  }
+    
   // --------------------------------------------------------------
   // STEP 6: UPDATE THE SCREEN
   // --------------------------------------------------------------
   // Remember: changing a variable does NOT change what the player
   // sees. You have to update the DOM separately.
   // --------------------------------------------------------------
-  statValue.textContent = gameState;
+  statValue.textContent = lives;
 
   // This logs to YOUR dev console (in the browser, press F12 to see
   // the real one too) — it's for your team, not the player.
-  console.log("Current state:", gameState, "| Correct?", correct);
-  devLog.textContent = `state = ${gameState} | last answer correct = ${correct}`;
+  console.log("Current state:", lives, "| Correct?", correct);
+  devLog.textContent = `state = ${lives} | last answer correct = ${correct}`;
 }
 
 
@@ -194,9 +204,9 @@ function handleAnswer() {
    TODO: Update the starting value below to match Step 2.
 ---------------------------------------------------------------- */
 function handleReset() {
-  gameState = 0; // <-- match this to your starting value from Step 2
+  lives = 3; // <-- match this to your starting value from Step 2
 
-  statValue.textContent = gameState;
+  statValue.textContent = lives;
   message.textContent = "Press \"Answer\" to begin!";
   devLog.textContent = "Waiting for input...";
 
